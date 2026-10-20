@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Charo 💌</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(145deg,
+    #fff9f5, #f5dce5, #fff1ee);
+  font-family: Georgia, serif;
+  color: #855b6b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.contenedor {
+  width: 94%;
+  max-width: 430px;
+  text-align: center;
+  padding: 35px 10px;
+}
+
+.etiqueta {
+  color: #b18a5a;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-size: 42px;
+  color: #ad7288;
+  margin: 12px 0;
+  font-weight: normal;
+}
+
+.intro {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.adornos {
+  font-size: 26px;
+  margin: 15px 0;
+}
+
+/* AREA DEL SOBRE */
+
+.escenario {
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  margin-top: 10px;
+  transition: height .8s;
+}
+
+.sobre {
+  position: relative;
+  width: 270px;
+  height: 175px;
+  cursor: pointer;
+  filter: drop-shadow(0 16px 16px #9d637044);
+  transition: transform .6s;
+}
+
+.sobre:active {
+  transform: scale(.97);
+}
+
+.fondo-sobre {
+  position: absolute;
+  inset: 0;
+  background: #d996aa;
+  border-radius: 8px;
+}
+
+/* CARTITA DENTRO DEL SOBRE */
+
+.papel {
+  position: absolute;
+  width: 220px;
+  height: 135px;
+  top: 17px;
+  left: 25px;
+  background: #fffaf4;
+  border: 1px solid #d9bd8e;
+  border-radius: 5px;
+  z-index: 2;
+  padding: 15px;
+  transition: transform 1.2s ease,
+              opacity .6s;
+}
+
+.papel span {
+  display: block;
+  color: #b47c91;
+  font-size: 17px;
+  margin-top: 10px;
+}
+
+.papel small {
+  display: block;
+  margin-top: 12px;
+  color: #bd9865;
+}
+
+/* FRENTE DEL SOBRE */
+
+.frente {
+  position: absolute;
+  inset: 0;
+  background: #e8b0bf;
+  clip-path: polygon(
+    0 0, 50% 55%, 100% 0,
+    100% 100%, 0 100%
+  );
+  z-index: 3;
+  border-radius: 7px;
+}
+
+.bolsillo {
+  position: absolute;
+  inset: 0;
+  background: #efc2ce;
+  clip-path: polygon(
+    0 100%, 50% 43%, 100% 100%
+  );
+  z-index: 4;
+  border-radius: 7px;
+}
+
+/* SOLAPA 3D */
+
+.solapa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 105px;
+  background: #d78fa5;
+  clip-path: polygon(
+    0 0, 100% 0, 50% 100%
+  );
+  transform-origin: top center;
+  transition: transform 1s ease;
+  z-index: 6;
+  backface-visibility: hidden;
+}
+
+.sello {
+  position: absolute;
+  top: 72px;
+  left: 111px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #c6a16e;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 23px;
+  z-index: 7;
+  transition: opacity .4s;
+  box-shadow: 0 3px 10px #8b6a4b44;
+}
+
+/* ANIMACION DE APERTURA */
+
+.sobre.abriendo .solapa {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.sobre.abriendo .sello {
+  opacity: 0;
+}
+
+.sobre.abriendo .papel {
+  transform: translateY(-125px);
+  transition-delay: .8s;
+}
+
+.indicacion {
+  font-size: 14px;
+  color: #aa7d8b;
+  animation: respirar 2s infinite;
+}
+
+/* CARTA COMPLETA */
+
+.carta {
+  display: none;
+  opacity: 0;
+  background: #fffdf9;
+  border: 1px solid #d6b582;
+  border-radius: 18px;
+  padding: 30px 24px;
+  box-shadow: 0 15px 40px #9c697033;
+}
+
+.carta.visible {
+  display: block;
+  animation: mostrarCarta 1.3s forwards;
+}
+
+.carta h2 {
+  font-size: 30px;
+  font-weight: normal;
+  color: #b07589;
+  line-height: 1.4;
+}
+
+.carta p {
+  font-size: 16px;
+  line-height: 1.95;
+}
+
+.firma {
+  margin-top: 30px;
+  color: #b18a5a;
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.separador {
+  color: #c6a16e;
+  margin: 20px 0;
+}
+
+button {
+  background: #f8e7eb;
+  color: #9c6478;
+  border: 1px solid #c6a16e;
+  border-radius: 25px;
+  padding: 12px 22px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 8px 4px;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.controles {
+  display: none;
+  margin-top: 20px;
+}
+
+/* FLORES FLOTANTES */
+
+.particula {
+  position: fixed;
+  top: -35px;
+  pointer-events: none;
+  z-index: 20;
+  animation: caer linear forwards;
+}
+
+@keyframes caer {
+  to {
+    transform:
+      translateY(110vh)
+      rotate(400deg);
+    opacity: 0;
+  }
+}
+
+@keyframes respirar {
+  50% { opacity: .4; }
+}
+
+@keyframes mostrarCarta {
+  from {
+    opacity: 0;
+    transform: translateY(45px) scale(.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="musica" src="musica.mp3"
+       preload="auto" loop></audio>
+
+<div class="contenedor">
+
+  <div class="adornos">🌸 🦋 🌸</div>
+
+  <div class="etiqueta">
+    UNA SORPRESA ESPECIAL
+  </div>
+
+  <h1>Para Charo</h1>
+
+  <p class="intro">
+    Hay personas que merecen
+    detalles tan bonitos como ellas.
+    <br>
+    Este es uno para ti.
+  </p>
+
+  <div class="escenario" id="escenario">
+
+    <div class="sobre" id="sobre"
+         role="button" tabindex="0"
+         aria-label="Abrir carta para Charo"
+         onclick="abrirSobre()"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();abrirSobre();}">
+
+      <div class="fondo-sobre"></div>
+
+      <div class="papel">
+        🌷
+        <span>Feliz cumpleaños</span>
+        <small>Para ti, Charo 💗</small>
+      </div>
+
+      <div class="frente"></div>
+      <div class="bolsillo"></div>
+      <div class="solapa"></div>
+      <div class="sello">♥</div>
+
+    </div>
+
+  </div>
+
+  <p class="indicacion" id="indicacion">
+    Toca el sobre para abrir tu carta 💌
+  </p>
+
+  <div class="carta" id="carta">
+
+    <div class="adornos">🌷 ✨ 🦋</div>
+
+    <div class="etiqueta">
+      UN DÍA PARA CELEBRARTE
+    </div>
+
+    <h2>
+      ¡Feliz cumpleaños,
+      Charo!
+    </h2>
+
+    <div class="separador">
+      ✦ ───── ✦ ───── ✦
+    </div>
+
+    <p>Querida Rosario:</p>
+
+    <p>
+      Hoy es un día muy especial,
+      porque celebramos un año más
+      de tu vida.
+    </p>
+
+    <p>
+      Deseo de corazón que este
+      nuevo año esté lleno de
+      momentos hermosos, alegrías
+      inesperadas y sueños que
+      poco a poco se hagan realidad.
+    </p>
+
+    <p>
+      Que nunca te falten razones
+      para sonreír, personas que
+      te quieran de verdad y
+      oportunidades para descubrir
+      todo lo bonito que la vida
+      tiene preparado para ti.
+    </p>
+
+    <p>
+      Espero que hoy recibas
+      muchísimo cariño y que
+      disfrutes cada instante
+      de tu día.
+    </p>
+
+    <p>
+      ¡Feliz cumpleaños,
+      prima charo! 💗
+    </p>
+
+    <div class="separador">
+      🌸 ✨ 🌸
+    </div>
+
+    <div class="firma">
+      Con mucho cariño,<br>
+      Yossi
+    </div>
+
+    <button onclick="mostrarDeseo()">
+      🌷 Un último deseo
+    </button>
+
+    <p id="deseo" style="display:none">
+      Que cada día de este nuevo año
+      te regale una razón más
+      para ser feliz. ✨
+    </p>
+
+  </div>
+
+  <div class="controles" id="controles">
+
+    <button id="btnMusica"
+            onclick="controlarMusica()">
+      🔊 Pausar música
+    </button>
+
+    <button onclick="reiniciar()">
+      💌 Volver a ver
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+let abierto = false;
+let audio = document.getElementById("musica");
+let botonMusica = document.getElementById("btnMusica");
+
+audio.volume = 0.35;
+
+function reproducirMusica() {
+  let intento = audio.play();
+
+  if (intento !== undefined) {
+    intento.then(function() {
+      botonMusica.textContent =
+        "🔊 Pausar música";
+    }).catch(function() {
+      botonMusica.textContent =
+        "🎶 Reproducir música";
+    });
+  }
+}
+
+function abrirSobre() {
+  if (abierto) return;
+
+  abierto = true;
+
+  // La música empieza con el toque
+  reproducirMusica();
+
+  let sobre = document.getElementById("sobre");
+  sobre.classList.add("abriendo");
+
+  document.getElementById("indicacion")
+    .style.display = "none";
+
+  setTimeout(function() {
+    document.getElementById("escenario")
+      .style.display = "none";
+
+    document.getElementById("carta")
+      .classList.add("visible");
+
+    document.getElementById("controles")
+      .style.display = "block";
+
+    lanzarFlores();
+  }, 2200);
+}
+
+function controlarMusica() {
+  if (audio.paused) {
+    reproducirMusica();
+  } else {
+    audio.pause();
+    botonMusica.textContent =
+      "🎶 Reproducir música";
+  }
+}
+
+function mostrarDeseo() {
+  document.getElementById("deseo")
+    .style.display = "block";
+
+  lanzarFlores();
+}
+
+function lanzarFlores() {
+  let elementos = [
+    "🌸", "🌷", "🦋", "✨", "💗"
+  ];
+
+  for (let i = 0; i < 35; i++) {
+    let particula =
+      document.createElement("div");
+
+    particula.className = "particula";
+
+    particula.textContent =
+      elementos[Math.floor(
+        Math.random() * elementos.length
+      )];
+
+    particula.style.left =
+      Math.random() * 100 + "vw";
+
+    particula.style.fontSize =
+      (15 + Math.random() * 16) + "px";
+
+    particula.style.animationDuration =
+      (3 + Math.random() * 3) + "s";
+
+    particula.style.animationDelay =
+      (Math.random() * 2) + "s";
+
+    document.body.appendChild(particula);
+
+    setTimeout(function() {
+      particula.remove();
+    }, 8500);
+  }
+}
+
+function reiniciar() {
+  abierto = false;
+
+  let sobre = document.getElementById("sobre");
+
+  sobre.classList.remove("abriendo");
+
+  document.getElementById("escenario")
+    .style.display = "flex";
+
+  document.getElementById("carta")
+    .classList.remove("visible");
+
+  document.getElementById("indicacion")
+    .style.display = "block";
+
+  document.getElementById("controles")
+    .style.display = "none";
+
+  document.getElementById("deseo")
+    .style.display = "none";
+
+  audio.pause();
+  audio.currentTime = 0;
+}
+</script>
+
+</body>
+</html>
